@@ -9,7 +9,9 @@ from app.config import POSTGRES
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://%(host)s:%(port)s" \
+                                        "/%(db)s?user=%(user)s&password=%(pw)s" % \
+                                        POSTGRES
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
