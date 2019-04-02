@@ -82,7 +82,7 @@ function onMapClick(e) {
 				 + "</head><br><input type='button' value='Remove ALL streets' class='delete-all-button'/>"
 				 // + "<br><input type='button' value ='Change snow factor' class='shortest-path-button'/>"
 				 // + "<form action='/action_page.php'>Snowlevel: <input type='text' name='FirstName' value='1-10'><input type='submit' value='Submit'></form>"
-			 + '<div class="slidecontainer">	<p>Amount of snow:</p><input type="range" min="1" max="10" value="'+ feature.properties.SNOWLEVEL +'"class="slider" id="myRange">'
+			 + '<div class="slidecontainer">	<h4>Amount of snow:</h4><input type="range" min="1" max="10" value="'+ feature.properties.SNOWLEVEL +'"class="slider" id="myRange">'
 		 	 + "</head><br><input type='button' value='Submit' class='submit-snow-button'/>")
 
 			}
