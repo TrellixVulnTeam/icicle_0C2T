@@ -37,13 +37,25 @@ var view = [63.42  , 10.4];
 
 var currentCounty = "";
 
+function getColor(d) {
+	colors = ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b'];
+
+	var i;
+	for (i = 1; i < 10; i++) {
+	  if (d == i) {
+      console.log(d);
+			return colors[i-1];
+		}
+	}
+	return colors[i];
+}
+
 function style(feature) {
     return {
-        fillColor: '#A5F2F3',
+        fillColor: '#c6dbef',
         weight: 2,
         opacity: 1,
         // color: '',
-        dashArray: '3',
         fillOpacity: 0.7
     };
 }
@@ -79,7 +91,7 @@ function zoomToFeature(e) {
 
 function onEachFeature(feature, layer) {
    layer.bindPopup("<h2>" + feature.properties.name_1 + "</h2>"
-                    + "</head><br><input type='button' value='Take me to the (b)icicle city!' class='marker-delete-button'/>");
+                    + "</head><br><input type='button' value='Show me the icicle data' class='marker-delete-button'/>");
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
@@ -120,6 +132,7 @@ function onPopupOpen() {
             console.log("SUCCESS");
 
             L.geoJSON(d, {
+                style: myStyle,
                 onEachFeature: onEachFeature
             }).addTo(mymap);
           },

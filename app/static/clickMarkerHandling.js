@@ -4,23 +4,23 @@ mymap.on('click', onMapClick);
 var clicked = [];
 var clickedJson = [];
 var cars = [
-    { "make":"Porsche", "model":"911S" },
-    { "make":"Mercedes-Benz", "model":"220SE" },
-    { "make":"Jaguar","model": "Mark VII" }
+	{ "make":"Porsche", "model":"911S" },
+	{ "make":"Mercedes-Benz", "model":"220SE" },
+	{ "make":"Jaguar","model": "Mark VII" }
 ];
 
 function onMapClick(e) {
-    // Lager først et feature der clicket skjer.
-    var coordinates = [e.latlng.lat, e.latlng.lng]
-    coordinates = "" + coordinates
+  // Lager først et feature der clicket skjer.
+		var coordinates = [e.latlng.lat, e.latlng.lng]
+		coordinates = "" + coordinates
 
 
     var geojsonFeature = {
         "type": "Feature",
         "properties": {},
         "geometry": {
-            "type": "Point",
-            "coordinates": coordinates
+                "type": "Point",
+                "coordinates": coordinates
         }
     }
 
@@ -38,16 +38,16 @@ function onMapClick(e) {
                 riseOnHover: true,
                 draggable: true,
             }).bindPopup("<head>" + str +"</head><br><input type='button' value='Delete this marker' class='marker-delete-button'/>"
-                + "<br><input type='button' value ='Find Shortest Path' class='shortest-path-button'/>");
+                          + "<br><input type='button' value ='Find Shortest Path' class='shortest-path-button'/>");
 
             marker.on("popupopen", onPopupOpen);
 
             // Skjekker om det finnes to markers fra før; hvis ja; slett den forrige "end"-markern
             if (clicked.length > 1) {
-                var m = clicked[1];
-                mymap.removeLayer(m);
-                clickedJson.pop();
-                clicked.pop();
+              var m = clicked[1];
+              mymap.removeLayer(m);
+              clickedJson.pop();
+              clicked.pop();
             }
 
             clicked.push(marker);
@@ -71,26 +71,26 @@ function onPopupOpen() {
         mymap.removeLayer(clicked[0]);
         mymap.removeLayer(clicked[1]);
         clicked = [];
-        clickedJson = [];
+				clickedJson = [];
     });
 
     $(".shortest-path-button:visible").click(function () {
-        // ajax the JSON to the server
+      // ajax the JSON to the server
 
-        console.log((clickedJson[0]))
-        $.ajax({
-            type: 'POST',
-            // dataType: 'json',
-            contentType: 'application/json',
-            url: '/map.html',
-            data: JSON.stringify(clickedJson[0]),
-            success: function(d) {
-                console.log("SUCCESS");
-                console.log(d)
-            },
-            error: function() {
-                alert('error when giving coordinates to backend');
-            }
-        })
+			console.log((clickedJson[0]))
+      $.ajax({
+        type: 'POST',
+        // dataType: 'json',
+        contentType: 'application/json',
+        url: '/map.html',
+        data: JSON.stringify(clickedJson[0]),
+        success: function(d) {
+          console.log("SUCCESS");
+					console.log(d)
+        },
+        error: function() {
+          alert('error when giving coordinates to backend');
+        }
+      })
     });
-}
+  }

@@ -84,11 +84,17 @@ def map():
 @app.route('/snow', methods = ['POST'])
 def snow():
     d = request.get_json()
+
+    returnCollection = []
+    returnCollection.append(d)
     # roads[properties][SNOWLEVEL] =
     for index in range(len(roads['features'])):
         if (roads['features'][index]['properties']['GATENAVN']) == (d['properties']['GATENAVN']):
             roads['features'][index]['properties']['SNOWLEVEL'] = d['properties']['SNOWLEVEL']
-    return ""
+
+            returnCollection.append(roads['features'][index])
+
+    return jsonify(returnCollection)
 
 
 @app.route("/register", methods=['GET', 'POST'])
