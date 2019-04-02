@@ -4,9 +4,8 @@ mymap.on('click', onMapClick);
 
 var myFeatures = [];
 
-
 function getColor(d) {
-    colors = ['#f1f1f1','#fbff30','#f49b42','#c94600'];
+    colors = ['#5df42f','#fbff30','#f49b42','#c94600'];
 
         return d > 9 ? colors[3] :
             d > 5  ? colors[2] :
@@ -18,7 +17,7 @@ function getColor(d) {
 function myStyle(feature) {
 	return {
 	        fillColor: getColor(feature['properties']['SNOWLEVEL']),
-	        weight: 5,
+	        weight: 4,
 	        opacity: 1,
 	        color: getColor(feature['properties']['SNOWLEVEL']),
 	        dashArray: '',
@@ -50,15 +49,16 @@ function onMapClick(e) {
 
         // SHOULD RETURN A COLLECTION OF geoJSON
         console.log("SUCCESS");
-				console.log(d);
 
-        L.geoJSON(d, {
+				if (d != "null") {
+				L.geoJSON(d, {
 						style: myStyle,
 						onEachFeature: onEachFeature,
         }).addTo(mymap);
-        // mymap.eachLayer(function(layer){
-        //   layer.togglePopup();
-        // })
+					info._div.innerHTML = '<h4>Retrieved ' + d[0]['properties']['GATENAVN'] +  ' from database</h4><br>' + '<br>Click on the road to change its features!'
+				} else {
+					info._div.innerHTML = '<h4>Could not find any nearby roads. Try again!</h4><br>' + '<br>if no road is visible, click on the map!<br>if a road is nearby of where you clicked, <br>the application will find it.'
+				}
       },
       error: function() {
         alert('error when giving coordinates to backend');
@@ -68,7 +68,6 @@ function onMapClick(e) {
 
   function onEachFeature(feature, layer) {
       // does this feature have a property named popupContent?
-			console.log("Working like a madman")
 			if (feature.properties) {
 				if(feature.properties['GATENAVN'] != '') {
 					s = "<h4>" + feature.properties['GATENAVN'] + "</h4>";
@@ -91,7 +90,14 @@ function onMapClick(e) {
   }
 
 	function onPopupOpen() {
+
 		var feature = this;
+		console.log(feature['feature']['properties']['GATENAVN']);
+		if (feature['feature']['properties']['GATENAVN'].length === 0) {
+			info._div.innerHTML = '<h4>You have chosen ' + 'a undefined street!' + '</h4><br>' + '<br>Do you agree with the amount of snow?<br>Go ahead! Change it!'
+		} else {
+			info._div.innerHTML = '<h4>You have chosen ' + feature['feature']['properties']['GATENAVN'] + '!</h4><br>' + '<br>Do you agree with the snowlevel?<br>Go ahead! Change it!'
+		}
 	    // To remove marker on click of delete button in the popup of marker
 	    // Foreløpig slettes begge markers når man klikker
 	    $(".marker-delete-button:visible").click(function () {
@@ -101,6 +107,7 @@ function onMapClick(e) {
 						try {
 						  if(layer['feature']['properties']['GATENAVN'] == feature['feature']['properties']['GATENAVN']) {
 								mymap.removeLayer(layer);
+								info._div.innerHTML = '<h4>Successfully removed ' + feature['feature']['properties']['GATENAVN'] + '<br><br>Click on the map!<br>if a road is nearby of where you clicked, <br>the application will find it.'
 							}
 						}
 						catch(err) {
@@ -123,6 +130,7 @@ function onMapClick(e) {
 							    id: 'mapbox.streets',
 							    accessToken: 'your.mapbox.access.token'
 							}).addTo(mymap);
+							info._div.innerHTML = '<h4>Successfully removed ' + '...all features<br>' + '<br>To retrieve the roads click on the map!<br>if a road is nearby of where you clicked, <br>the application will find it.'
 						}
 						catch(err) {
 						}
@@ -144,6 +152,8 @@ function onMapClick(e) {
 								onEachFeature: onEachFeature,
 		        }).addTo(mymap);
 
+						info._div.innerHTML = '<h4>Successfully submitted the snowlevel!<br>' + '<br>Thanks for contributing to our icicle-data!'
+
 		      },
 		      error: function() {
 		        alert('error when giving coordinates to backend');
@@ -151,6 +161,7 @@ function onMapClick(e) {
 		    });
 			});
 		}
+
 
 
 		// getting all the markers at once

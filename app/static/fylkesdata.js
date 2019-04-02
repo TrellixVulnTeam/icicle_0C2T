@@ -38,16 +38,13 @@ var view = [63.42  , 10.4];
 var currentCounty = "";
 
 function getColor(d) {
-	colors = ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b'];
+    colors = ['#5df42f','#fbff30','#f49b42','#c94600'];
 
-	var i;
-	for (i = 1; i < 10; i++) {
-	  if (d == i) {
-      console.log(d);
-			return colors[i-1];
-		}
-	}
-	return colors[i];
+        return d > 9 ? colors[3] :
+            d > 5  ? colors[2] :
+                d > 2  ? colors[1]:
+                    colors[0];
+
 }
 
 function style(feature) {
@@ -62,6 +59,7 @@ function style(feature) {
 
 function highlightFeature(e) {
     var layer = e.target;
+    info._div.innerHTML = '<h4>Click on a county!</h4>'
 
     layer.setStyle({
         weight: 5,
@@ -130,6 +128,7 @@ function onPopupOpen() {
 
             // SHOULD RETURN A COLLECTION OF geoJSON
             console.log("SUCCESS");
+            info._div.innerHTML = '<h4>Click on a road!</h4>' + '<br>if no road is visible, click on the map!<br>if a road is nearby of where you clicked, <br>the application will find it.'
 
             L.geoJSON(d, {
                 style: myStyle,
@@ -146,3 +145,40 @@ function onPopupOpen() {
       }
     });
   }
+
+  var info = L.control();
+
+  info.onAdd = function (map) {
+      this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+      this.update();
+      return this._div;
+  };
+
+  // method that we will use to update the control based on feature properties passed
+  info.update = function (props) {
+      this._div.innerHTML = '<h4>Click on a county!</h4>'
+  };
+
+  info.addTo(mymap);
+
+
+
+
+  var legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [1, 2, 5, 9, 10],
+        labels = ["Good conditions", "Some snow", "Much snow", "Don´t you even think about it!"];
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length - 1; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            '' + (labels[i] + '<br>');
+    }
+
+    return div;
+};
+
+legend.addTo(mymap);
