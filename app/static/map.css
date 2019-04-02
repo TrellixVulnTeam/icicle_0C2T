@@ -4,24 +4,7 @@ body.home {
     background-image: url('assets/background1.gif');
     background-repeat: no-repeat;
     background-color: 	#09A4F4;
-    /*background-color:		#0088ED;*/
-    /*background-color: #03B3FF;*/
     background-size: 55%;
-    /*background-repeat: repeat-y;
-    background-size: 65% auto;
-    background-repeat: no-repeat;
-    /*background-image: url('assets/background3.gif');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: blue;
-    background-attachment: fixed;
-    background-size: cover;
-    /*background: rgb(248, 248, 248);
-    font-family: sans-serif;
-    filter: brightness(100%);
-    background-image: url('http://i.imgur.com/9HMnxKs.png');
-    background-repeat: repeat-y;
-    background-size: 50% auto;*/
 
 }
 body.body {
@@ -34,7 +17,7 @@ body.body {
 }
 
 h1, h3, h5, h6, p {
-    color: #ffffff;
+    color: #000000;
     text-align: center;
 }
 .front-text {
