@@ -46,11 +46,8 @@
     </header>
     
     <main role="main" class="container">
-        </div>
-        <h4 class="front-text"><b>W  E  L  C  O  M  E<br><br>T O<br><br>I C I C L E</b></h4>
-      </div>
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-4">
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -60,14 +57,16 @@
               {% endfor %}
             {% endif %}
           {% endwith %}
+          <div class="col-6 col-md-4">
+          </div>
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4">
-            <div class="content-map">
-            <a class = "img-front" href="map.html"><img src="static/circle_map.png" alt="map" width="200"
-              height="200">
-          </a>
+        <div class="col-6 col-md-4">
+            <h4 class="front-text"><b>W E L C O M E<br><br>T O<br><br>I C I C L E</b></h4>
         </div>
+        <div class="col-6 col-md-4">
+            <a class = "img-front" href="map.html"><img src="static/circle_map.png" alt="map" height = 420px width = 420px class = responsive>
+          </a>
         </div>
       </div>
     </main>

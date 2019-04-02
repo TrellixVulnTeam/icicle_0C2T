@@ -4,8 +4,10 @@ body.body {
   background-image: url('background1.gif');
   background-color: 	#09A4F4;
   background-repeat: no-repeat;
-  background-size: 55%;
-  margin-top: 5rem;
+  background-position: left;
+  background-position-y: 50px;
+  background-size: 42%;
+  margin-top: 10rem;
 }
 body.else {
   background-color: 	#09A4F4;
@@ -23,7 +25,11 @@ img {
   box-shadow: #dddddd;
   animation: glow 3.0s linear infinite alternate;
 }
-
+.img-front {
+  position: center;
+  margin-top: 10%;
+  margin-left: 20%;
+}
 @keyframes glow{
   to {
     box-shadow: 0px 0px 10px 5px #2a3742;
@@ -62,43 +68,8 @@ h1, h2, h3, h4, h5, h6, .form-group {
   border-radius: 3px;
   margin-top: 0px;
   margin-bottom: 20px;
+  position: center;
 }
-.article-title {
-  color: #444444;
-}
-
-a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
-}
-
-.article-content {
-  white-space: pre-line;
-}
-
-.article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
-}
-
-.article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
-}
-
-.article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
-}
-
-.article-svg {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-}
-
 .account-img {
   height: 125px;
   width: 125px;
@@ -110,13 +81,15 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 .col-md-4 {
-  margin-top: 10%;
+  position: relative;
 }
 .front-text {
   text-align: center;
-  position: absolute;
-  margin-top: 14%;
-  margin-left: 40%;
+  margin-top: 10%;
+  position: relative;
+}
+.map-section{
+  margin-top: 10%;
 }
 .about-text {
   background: #2a3742;
@@ -186,3 +159,8 @@ a.article-title:hover {
   font-size: 22px;
 }
 
+.responsive {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+}

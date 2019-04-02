@@ -4,15 +4,15 @@ mymap.on('click', onMapClick);
 
 var myFeatures = [];
 
+
 function getColor(d) {
-	colors = ['#6baed6','#3182bd','#08519c'];
-	var i;
-	for (i = 1; i < 4; i++) {
-	  if (d * i > 7) {
-			return colors[3-i];
-		}
-	}
-	return colors[0];
+    colors = ['#f1f1f1','#fbff30','#f49b42','#c94600'];
+
+        return d > 9 ? colors[3] :
+            d > 5  ? colors[2] :
+                d > 2  ? colors[1]:
+                    colors[0];
+
 }
 
 function myStyle(feature) {
