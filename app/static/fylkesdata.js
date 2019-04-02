@@ -126,6 +126,25 @@ function onPopupOpen() {
                   }),
           success: function(d) {
 
+              var legend = L.control({position: 'bottomright'});
+
+              legend.onAdd = function (map) {
+
+                  var div = L.DomUtil.create('div', 'info legend'),
+                      grades = [1, 2, 5, 9, 10],
+                      labels = ["Good conditions", "Some snow", "Much snow", "Don´t you even think about it!"];
+                  // loop through our density intervals and generate a label with a colored square for each interval
+                  for (var i = 0; i < grades.length - 1; i++) {
+                      div.innerHTML +=
+                          '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                          '' + (labels[i] + '<br>');
+                  }
+
+                  return div;
+              };
+
+              legend.addTo(mymap);
+
             // SHOULD RETURN A COLLECTION OF geoJSON
             console.log("SUCCESS");
             info._div.innerHTML = '<h4>Click on a road!</h4>' + '<br>if no road is visible, click on the map!<br>if a road is nearby of where you clicked, <br>the application will find it.'
@@ -160,25 +179,3 @@ function onPopupOpen() {
   };
 
   info.addTo(mymap);
-
-
-
-
-  var legend = L.control({position: 'bottomright'});
-
-  legend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [1, 2, 5, 9, 10],
-        labels = ["Good conditions", "Some snow", "Much snow", "Don´t you even think about it!"];
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length - 1; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            '' + (labels[i] + '<br>');
-    }
-
-    return div;
-};
-
-legend.addTo(mymap);
