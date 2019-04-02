@@ -1,33 +1,34 @@
+import math
 import os
 import secrets
+from math import isclose
+
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, jsonify
+import psycopg2
+
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from app.models import User, Post
+from app.models import User, Roads
 from flask_login import login_user, current_user, logout_user, login_required
+from app.findRoads import roads
 
-
+"""
 posts = [
     {
         'author': 'Corey Schafer',
         'title': 'Blog Post 1',
         'content': 'First post content',
         'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Jane Doe',
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
     }
 ]
 
+"""
 
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    return render_template('home.html')
 
 
 @app.route("/about")
@@ -112,7 +113,8 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        print("" + user.password + "\n")
+        if user and bcrypt.check_password_hash(user.password, form.password.data.encode('utf-8')):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
@@ -131,7 +133,7 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    picture_path = os.path.join(app.root_path, 'app/static/profile_pics', picture_fn)
 
     output_size = (125, 125)
     i = Image.open(form_picture)
@@ -164,7 +166,7 @@ def account():
 #populate table in db
 @app.route('/populate')
 def populate():
-    with open('roads/geoquery.txt') as f:
+    with open('app/roads/centre_roads.txt') as f:
         obj_list = []
         for chunk in each_chunk(f, '$'):
             obj_list.append(chunk)

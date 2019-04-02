@@ -13,13 +13,16 @@ POSTGRES = {
 #"/%(db)s?user=%(user)s&password=%(pw)s" % POSTGRES
 
 class Config(object):
-    DEBUG = False
+    DEBUG = True
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 'a?1lv+al355f"/+'
+    WTF_CSRF_SECRET_KEY = '5791628bb0b13ce0c676dfde280ba245'
     SQLALCHEMY_DATABASE_URI = "postgresql://%(host)s:%(port)s" \
-                              "/%(db)s?user=%(user)s&password=%(pw)s" % POSTGRES
-    SQLALCHEMY_TRACK_MODIFICATIONS = False;
+                              "/%(db)s?user=%(user)s&password=%(pw)s" % \
+                              POSTGRES or \
+                              'sqlite:///site.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 
